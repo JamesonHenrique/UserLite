@@ -1,6 +1,6 @@
 # Spring Boot RESTful Web Services
 
-Este é um projeto simples do Spring Boot que demonstra como criar um serviço web RESTful usando Java e o Spring Framework. O projeto consiste em uma única classe de controlador que expõe dois pontos de extremidade: um para criar um novo usuário e outro para recuperar um usuário por ID.
+Este é um projeto simples do Spring Boot que demonstra como criar um serviço web RESTful usando Java e o Spring Framework. O projeto consiste em uma única classe de controlador que expõe 4 pontos de extremidade: um para criar um novo usuário, um para recuperar um usuário por ID, um para obter todos os usuarios e outro para deletar um usuario por ID.
 
 ## Requisitos
 
@@ -59,4 +59,32 @@ Resposta:
   "email": "johndoe@example.com"
 }
 ```
+### Recuperando todos os usuarios
+
+GET http://localhost:8080/api/users
+
+Resposta:
+
+```json
+{
+  "id": 1,
+  "name": "John Doe",
+  "email": "johndoe@example.com"
+}
+ {
+  "id": 3,
+  "firstName": "Pedro",
+  "lastName": "Henrique",
+  "email": "pedrohenrique@example.com"
+    }
+```
+### Deletando usuarios
+
+Delete http://localhost:8080/api/users
+
+Resposta:
+
+```json
+User Deleted
+
 
