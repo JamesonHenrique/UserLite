@@ -80,7 +80,7 @@ Resposta:
 ```
 ### Deletando usuarios
 
-Delete http://localhost:8080/api/users
+DELETE http://localhost:8080/api/users
 
 Resposta:
 
