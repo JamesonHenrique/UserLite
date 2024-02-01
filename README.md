@@ -12,7 +12,7 @@ Este é um projeto simples do Spring Boot que demonstra como criar um serviço w
 1. Clone este repositório:
 
 ```bash
-git clone https://github.com/your-username/springboot-restful-webservices.git
+git clone https://github.com/JamesonHenrique/springboot-restful-webservices.git
 ```
 
 2. Abra o projeto em seu IDE
