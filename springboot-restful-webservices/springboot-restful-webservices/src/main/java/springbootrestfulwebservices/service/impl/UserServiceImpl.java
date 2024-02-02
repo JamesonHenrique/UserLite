@@ -2,6 +2,7 @@ package springbootrestfulwebservices.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import springbootrestfulwebservices.dto.UserDTO;
 import springbootrestfulwebservices.entity.User;
 import springbootrestfulwebservices.repository.UserRepository;
 import springbootrestfulwebservices.service.UserService;
@@ -14,8 +15,21 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserRepository userRepository;
     @Override
-    public User createUser(User user) {
-        return userRepository.save(user);
+    public UserDTO createUser(UserDTO userDTO) {
+        User user = new User(userDTO.getId(),
+                userDTO.getLastName(),
+                userDTO.getEmail(),
+                userDTO.getFirstName()
+        );
+        User savedUser = userRepository.save(user);
+        UserDTO savedUserDTO = new UserDTO(
+                savedUser.getId(),
+                savedUser.getFirstName(),
+                savedUser.getLastName(),
+                savedUser.getEmail()
+        );
+        return savedUserDTO;
+
     }
 
     @Override

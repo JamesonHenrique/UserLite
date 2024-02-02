@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import springbootrestfulwebservices.dto.UserDTO;
 import springbootrestfulwebservices.entity.User;
 import springbootrestfulwebservices.service.UserService;
 
@@ -16,8 +17,8 @@ public class UserController {
     @Autowired
     private UserService userService;
     @PostMapping
-    public ResponseEntity<User> createUser(@RequestBody User user) {
-        User savedUser = userService.createUser(user);
+    public ResponseEntity<UserDTO> createUser(@RequestBody UserDTO user) {
+        UserDTO savedUser = userService.createUser(user);
         return new ResponseEntity<>(savedUser,
                 HttpStatus.CREATED);
 

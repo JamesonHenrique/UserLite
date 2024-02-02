@@ -1,10 +1,12 @@
 package springbootrestfulwebservices.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Entity
 @Data
+@AllArgsConstructor
 @Table(name = "users")
 public class User {
     @Id
