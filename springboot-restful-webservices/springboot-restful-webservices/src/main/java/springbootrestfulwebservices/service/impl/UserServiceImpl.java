@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import springbootrestfulwebservices.dto.UserDTO;
 import springbootrestfulwebservices.entity.User;
+import springbootrestfulwebservices.mapper.UserMapper;
 import springbootrestfulwebservices.repository.UserRepository;
 import springbootrestfulwebservices.service.UserService;
 
@@ -16,18 +17,11 @@ public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
     @Override
     public UserDTO createUser(UserDTO userDTO) {
-        User user = new User(userDTO.getId(),
-                userDTO.getLastName(),
-                userDTO.getEmail(),
-                userDTO.getFirstName()
-        );
+        User user = UserMapper.mapToUser(userDTO);
+
         User savedUser = userRepository.save(user);
-        UserDTO savedUserDTO = new UserDTO(
-                savedUser.getId(),
-                savedUser.getFirstName(),
-                savedUser.getLastName(),
-                savedUser.getEmail()
-        );
+
+        UserDTO savedUserDTO = UserMapper.mapToUserDTO(savedUser);
         return savedUserDTO;
 
     }
