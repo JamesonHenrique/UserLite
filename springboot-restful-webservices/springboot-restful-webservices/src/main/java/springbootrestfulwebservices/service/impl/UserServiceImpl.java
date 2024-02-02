@@ -10,6 +10,7 @@ import springbootrestfulwebservices.service.UserService;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -34,19 +35,20 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> getAllUsers() {
+    public List<UserDTO> getAllUsers() {
 
-        return userRepository.findAll();
+        List<User> users = userRepository.findAll();
+        return users.stream().map(UserMapper::mapToUserDTO).collect(Collectors.toList());
     }
 
     @Override
-    public User updateUser(User user) {
+    public UserDTO updateUser(User user) {
         User existingUser = userRepository.findById(user.getId()).get();
         existingUser.setFirstName(user.getFirstName());
         existingUser.setLastName(user.getLastName());
         existingUser.setEmail(user.getEmail());
         User updatedUser = userRepository.save(existingUser);
-        return updatedUser;
+        return UserMapper.mapToUserDTO(updatedUser);
     }
 
     @Override

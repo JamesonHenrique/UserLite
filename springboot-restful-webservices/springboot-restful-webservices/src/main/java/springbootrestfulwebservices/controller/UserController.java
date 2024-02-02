@@ -30,16 +30,16 @@ public class UserController {
                 HttpStatus.OK);
     }
     @GetMapping()
-    public ResponseEntity<List<User>> getAllUsers() {
-        List<User> users = userService.getAllUsers();
+    public ResponseEntity<List<UserDTO>> getAllUsers() {
+        List<UserDTO> users = userService.getAllUsers();
         return new ResponseEntity<>(users,
                 HttpStatus.OK);
     }
     @PutMapping("{id}")
-    public ResponseEntity<User> updateUser(@PathVariable("id") Long userId,
+    public ResponseEntity<UserDTO> updateUser(@PathVariable("id") Long userId,
                                            @RequestBody User user) {
         user.setId(userId);
-        User updatedUser = userService.updateUser(user);
+        UserDTO updatedUser = userService.updateUser(user);
 
     return new ResponseEntity<>(updatedUser,
                 HttpStatus.OK);
