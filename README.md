@@ -41,8 +41,9 @@ POST http://localhost:8080/api/users
 Corpo da solicitação:
 
 ```json
-{
-  "name": "John Doe",
+{ "id": 1,
+  "firstName": "John",
+   "lastName": "Doe",
   "email": "johndoe@example.com"
 }
 ```
@@ -51,8 +52,9 @@ Resposta:
 
 ```json
 {
-  "id": 1,
-  "name": "John Doe",
+ "id": 1,
+  "firstName": "John",
+   "lastName": "Doe",
   "email": "johndoe@example.com"
 }
 ```
