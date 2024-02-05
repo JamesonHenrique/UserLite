@@ -1,12 +1,12 @@
-package user.management.mapper;
+package usermanagement.mapper;
 
 import javax.annotation.processing.Generated;
-import user.management.dto.UserDto;
-import user.management.entity.User;
+import usermanagement.dto.UserDto;
+import usermanagement.entity.User;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-02-05T02:37:15-0300",
+    date = "2024-02-05T13:42:41-0300",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 21.0.2 (Oracle Corporation)"
 )
 public class AutoUserMapperImpl implements AutoUserMapper {
