@@ -52,7 +52,7 @@ Resposta:
 
 ```json
 {
- "id": 1,
+  "id": 1,
   "firstName": "John",
   "lastName": "Doe",
   "email": "johndoe@example.com"
@@ -68,7 +68,7 @@ Resposta:
 ```json
 {
 
-   "id": 1,
+  "id": 1,
   "firstName": "John",
   "lastName": "Doe",
   "email": "johndoe@example.com"
