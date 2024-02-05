@@ -19,12 +19,22 @@ public class GlobalExceptionHandler {
         );
         return new ResponseEntity<>(errorDetails, HttpStatus.NOT_FOUND);
     }
-    @ExceptionHandler({EmailAlreadyExistsException.class})
-    public ResponseEntity<ErrorDetails> handleEmailAlreadyExists(EmailAlreadyExistsException emailAlreadyExistsException, WebRequest webRequest) {
+    @ExceptionHandler(EmailAlreadyExistsException.class)
+    public ResponseEntity<ErrorDetails> handleEmailAlreadyExistsException(EmailAlreadyExistsException emailAlreadyExistsException, WebRequest webRequest) {
         ErrorDetails errorDetails = new ErrorDetails(
                 LocalDateTime.now(),
                 emailAlreadyExistsException.getMessage(),
                 webRequest.getDescription(false),"USER_EMAIL_ALREADY_EXISTS"
         );
         return new ResponseEntity<>(errorDetails, HttpStatus.BAD_REQUEST);
+
+}
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<ErrorDetails> handleException(Exception exception, WebRequest webRequest) {
+        ErrorDetails errorDetails = new ErrorDetails(
+                LocalDateTime.now(),
+                exception.getMessage(),
+                webRequest.getDescription(false),"INTERNAL SERVER ERROR"
+        );
+        return new ResponseEntity<>(errorDetails, HttpStatus.INTERNAL_SERVER_ERROR);
 }}
