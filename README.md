@@ -15,10 +15,17 @@ git clone https://github.com/JamesonHenrique/springboot-restful-webservices.git
 ```
 
 2. Abra o projeto em seu IDE
+   
+4. Altere o usuario e senha para que o projeto possa acessar o banco mysql.
 
-3. Compile e execute o projeto
+Vá até /src/main/resources/application.properties;
+Altere as propriedades informado o usuário e senha do seu banco de dados:
+spring.datasource.username=usuario
+spring.datasource.password=usuario
 
-4. Use um cliente REST como o Postman para testar os pontos de extremidade
+4. Compile e execute o projeto
+
+5. Use um cliente REST como o Postman para testar os pontos de extremidade
 
 ## Pontos de extremidade
 
