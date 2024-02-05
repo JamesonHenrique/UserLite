@@ -19,6 +19,7 @@ git clone https://github.com/JamesonHenrique/springboot-restful-webservices.git
 4. Altere o usuario e senha para que o projeto possa acessar o banco mysql.
 
 Vá até /src/main/resources/application.properties;
+
 Altere as propriedades informado o usuário e senha do seu banco de dados:
 spring.datasource.username=usuario
 spring.datasource.password=usuario
