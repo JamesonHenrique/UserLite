@@ -30,7 +30,7 @@ git clone https://github.com/JamesonHenrique/User-Management.git
 
 5. Use o Swagger de preferencia para testar a api ou o que você preferir
    
-      http://localhost:8080/swagger-ui/index.html#/
+      http://localhost:8080/swagger-ui/index.html
 
 ## Pontos de extremidade
 
