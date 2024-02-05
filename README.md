@@ -28,7 +28,8 @@ git clone https://github.com/JamesonHenrique/User-Management.git
 
 4. Compile e execute o projeto
 
-5. Use um cliente REST como o Postman para testar os pontos de extremidade
+5. Use o Swagger de preferencia ou o que você preferir
+   http://localhost:8080/swagger-ui/index.html#/
 
 ## Pontos de extremidade
 
