@@ -58,7 +58,7 @@ Resposta:
   "email": "johndoe@example.com"
 }
 ```
-### Recuperando todos os usuárioS
+### Recuperando todos os usuários
 
 GET http://localhost:8080/api/users
 
@@ -106,6 +106,6 @@ DELETE http://localhost:8080/api/users
 Resposta:
 
 ```json
-User Deleted
+User successfully deleted!
 
 
