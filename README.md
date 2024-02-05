@@ -96,7 +96,7 @@ Resposta:
 ```
 ### Atualizando usuários
 
-PUT http://localhost:8080/api/users
+PUT http://localhost:8080/api/users/1
 
 Corpo da solicitação:
 
