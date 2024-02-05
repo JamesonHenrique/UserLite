@@ -1,5 +1,6 @@
 package usermanagement.controller;
 
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.web.context.request.WebRequest;
 import usermanagement.dto.UserDto;
@@ -23,7 +24,7 @@ public class UserController {
 
 
     @PostMapping
-    public ResponseEntity<UserDto> createUser(@RequestBody UserDto user)
+    public ResponseEntity<UserDto> createUser(@RequestBody @Valid UserDto user)
              {
         UserDto savedUser = userService.createUser(user);
 
@@ -49,7 +50,7 @@ public class UserController {
     @PutMapping("{id}")
 
     public ResponseEntity<UserDto> updateUser(@PathVariable("id") Long userId,
-                                           @RequestBody UserDto user){
+                                           @RequestBody @Valid UserDto user){
         user.setId(userId);
         UserDto updatedUser = userService.updateUser(user);
         return new ResponseEntity<>(updatedUser, HttpStatus.OK);
