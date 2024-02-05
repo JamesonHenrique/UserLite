@@ -1,16 +1,19 @@
-package springbootrestfulwebservices.entity;
+package usermanagement.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Entity
-@Data
-@AllArgsConstructor
+@Getter
+@Setter
 @NoArgsConstructor
+@AllArgsConstructor
+@Entity
 @Table(name = "users")
 public class User {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -18,6 +21,6 @@ public class User {
     private String firstName;
     @Column(nullable = false)
     private String lastName;
-    @Column(nullable = false,unique = true)
+    @Column(nullable = false, unique = true)
     private String email;
 }
