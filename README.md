@@ -1,7 +1,6 @@
-# Spring Boot RESTful Web Services
+# User management
 
-Este é um projeto simples do Spring Boot que demonstra como criar um serviço web RESTful usando Java e o Spring Framework. O projeto consiste em uma única classe de controlador que expõe 5 pontos de extremidade: um para criar um novo usuário, um para recuperar um usuário por ID, um para atualizar usuário, um para obter todos os usuárioS e outro para deletar um  usuário por ID.
-
+Este projeto visa oferecer um sistema de gerenciamento de usuários simples usando o Spring Boot e o Hibernate.
 ## Requisitos
 
 - Java 11 ou superior
