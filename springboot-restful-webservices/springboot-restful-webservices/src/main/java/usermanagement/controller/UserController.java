@@ -1,12 +1,17 @@
 package usermanagement.controller;
 
 import lombok.AllArgsConstructor;
+import org.springframework.web.context.request.WebRequest;
 import usermanagement.dto.UserDto;
+import usermanagement.exception.EmailAlreadyExistsException;
+import usermanagement.exception.ErrorDetails;
+import usermanagement.exception.ResourceNotFoundException;
 import usermanagement.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -18,8 +23,10 @@ public class UserController {
 
 
     @PostMapping
-    public ResponseEntity<UserDto> createUser(@RequestBody UserDto user){
+    public ResponseEntity<UserDto> createUser(@RequestBody UserDto user)
+             {
         UserDto savedUser = userService.createUser(user);
+
         return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
     }
 
@@ -54,4 +61,6 @@ public class UserController {
         userService.deleteUser(userId);
         return new ResponseEntity<>("User successfully deleted!", HttpStatus.OK);
     }
-}
+
+    }
+

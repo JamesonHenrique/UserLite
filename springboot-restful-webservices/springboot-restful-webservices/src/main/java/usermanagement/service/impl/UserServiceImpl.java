@@ -3,6 +3,7 @@ package usermanagement.service.impl;
 import lombok.AllArgsConstructor;
 import usermanagement.dto.UserDto;
 import usermanagement.entity.User;
+import usermanagement.exception.EmailAlreadyExistsException;
 import usermanagement.exception.ResourceNotFoundException;
 import usermanagement.mapper.AutoUserMapper;
 import usermanagement.repository.UserRepository;
@@ -22,16 +23,18 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public UserDto createUser(UserDto userDto) {
-
-
-
+    public UserDto createUser(UserDto userDto)  {
+        Optional<User> optionalUser= userRepository.findByEmail(userDto.getEmail());
+        if(optionalUser.isPresent()){
+            throw new EmailAlreadyExistsException("Email already exists for user");
+        }
         User user = AutoUserMapper.MAPPER.mapToUser(userDto);
 
         User savedUser = userRepository.save(user);
 
 
         UserDto savedUserDto = AutoUserMapper.MAPPER.mapToUserDto(savedUser);
+
 
         return savedUserDto;
     }
