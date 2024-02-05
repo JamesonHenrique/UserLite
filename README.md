@@ -18,17 +18,19 @@ git clone https://github.com/JamesonHenrique/User-Management.git
    
 4. Altere o usuario e senha para que o projeto possa acessar o banco mysql.
 
-   Vá até /src/main/resources/application.properties;
+      Vá até /src/main/resources/application.properties;
 
-   Altere as propriedades informado o usuário e senha do seu banco de dados:
+      Altere as propriedades informado o usuário e senha do seu banco de dados:
 
-   spring.datasource.username=usuario
+      spring.datasource.username=usuario
 
-   spring.datasource.password=usuario
+      spring.datasource.password=usuario
 
 4. Compile e execute o projeto
 
-5. Use um cliente REST como o Postman para testar os pontos de extremidade
+5. Use o Swagger de preferencia para testar a api ou o que você preferir
+   
+      http://localhost:8080/swagger-ui/index.html
 
 ## Pontos de extremidade
 
@@ -39,8 +41,9 @@ POST http://localhost:8080/api/users
 Corpo da solicitação:
 
 ```json
-{
-  "name": "John Doe",
+{ 
+  "firstName": "John",
+  "lastName": "Doe",
   "email": "johndoe@example.com"
 }
 ```
@@ -49,8 +52,9 @@ Resposta:
 
 ```json
 {
-  "id": 1,
-  "name": "John Doe",
+ "id": 1,
+  "firstName": "John",
+  "lastName": "Doe",
   "email": "johndoe@example.com"
 }
 ```
@@ -63,8 +67,10 @@ Resposta:
 
 ```json
 {
-  "id": 1,
-  "name": "John Doe",
+
+   "id": 1,
+  "firstName": "John",
+  "lastName": "Doe",
   "email": "johndoe@example.com"
 }
 ```
@@ -77,7 +83,8 @@ Resposta:
 ```json
 {
   "id": 1,
-  "name": "John Doe",
+  "firstName": "John",
+  "lastName": "Doe",
   "email": "johndoe@example.com"
 }
  {
@@ -95,8 +102,10 @@ Corpo da solicitação:
 
 ```json
 {
-  "name": "John Husbon",
-  "email": "johnhusbon@example.com"
+  
+  "firstName": "John",
+  "lastName": "Doe",
+  "email": "johndoe@example.com"
 }
 ```
 
@@ -105,8 +114,9 @@ Resposta:
 ```json
 {
   "id": 1,
-  "name": "John Husbon",
-  "email": "johnhusbon@example.com"
+  "firstName": "John",
+  "lastName": "Doe",
+  "email": "johndoe@example.com"
 }
 ```
 ### Deletando usuários
