@@ -79,7 +79,8 @@ Resposta:
 ```json
 {
   "id": 1,
-  "name": "John Doe",
+  "firstName": "John",
+   "lastName": "Doe",
   "email": "johndoe@example.com"
 }
  {
@@ -97,8 +98,10 @@ Corpo da solicitação:
 
 ```json
 {
-  "name": "John Husbon",
-  "email": "johnhusbon@example.com"
+   "id": 1,
+  "firstName": "John",
+   "lastName": "Doe",
+  "email": "johndoe@example.com"
 }
 ```
 
@@ -107,8 +110,9 @@ Resposta:
 ```json
 {
   "id": 1,
-  "name": "John Husbon",
-  "email": "johnhusbon@example.com"
+  "firstName": "John",
+   "lastName": "Doe",
+  "email": "johndoe@example.com"
 }
 ```
 ### Deletando usuários
