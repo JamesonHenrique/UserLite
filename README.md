@@ -11,7 +11,7 @@ Este projeto visa oferecer um sistema de gerenciamento de usuários simples usan
 1. Clone este repositório:
 
 ```bash
-git clone https://github.com/JamesonHenrique/springboot-restful-webservices.git
+git clone https://github.com/JamesonHenrique/User-Management.git
 ```
 
 2. Abra o projeto em seu IDE
