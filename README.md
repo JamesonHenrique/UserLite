@@ -67,8 +67,10 @@ Resposta:
 
 ```json
 {
-  "id": 1,
-  "name": "John Doe",
+
+   "id": 1,
+  "firstName": "John",
+  "lastName": "Doe",
   "email": "johndoe@example.com"
 }
 ```
