@@ -21,6 +21,7 @@ git clone https://github.com/JamesonHenrique/springboot-restful-webservices.git
 Vá até /src/main/resources/application.properties;
 
 Altere as propriedades informado o usuário e senha do seu banco de dados:
+
 spring.datasource.username=usuario
 spring.datasource.password=usuario
 
