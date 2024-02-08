@@ -5,11 +5,9 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
-import org.springframework.web.context.request.WebRequest;
+
 import usermanagement.dto.UserDto;
-import usermanagement.exception.EmailAlreadyExistsException;
-import usermanagement.exception.ErrorDetails;
-import usermanagement.exception.ResourceNotFoundException;
+
 import usermanagement.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -74,7 +72,7 @@ public class UserController {
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
-    // Build Update User REST API
+
     @PutMapping("{id}")
     @Operation(
             summary = "Update User REST API",
