@@ -6,8 +6,8 @@ import usermanagement.entity.User;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-02-05T18:11:12-0300",
-    comments = "version: 1.5.5.Final, compiler: javac, environment: Java 21.0.2 (Oracle Corporation)"
+    date = "2024-05-17T03:46:28-0300",
+    comments = "version: 1.5.5.Final, compiler: javac, environment: Java 22 (Oracle Corporation)"
 )
 public class AutoUserMapperImpl implements AutoUserMapper {
 
