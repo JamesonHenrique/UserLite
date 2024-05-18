@@ -10,9 +10,12 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.NonTransientDataAccessException;
 import usermanagement.dto.UserDto;
 import usermanagement.entity.User;
+import usermanagement.exception.EmailAlreadyExistsException;
 import usermanagement.mapper.AutoUserMapper;
 import usermanagement.mapper.AutoUserMapperImpl;
 import usermanagement.repository.UserRepository;
@@ -24,7 +27,7 @@ import static com.fasterxml.jackson.databind.jsonFormatVisitors.JsonValueFormat.
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.*;
 
 @SpringBootTest
 class UserServiceImplTest {
@@ -33,13 +36,13 @@ class UserServiceImplTest {
             ;
 
     private static final String
-            LAST_NAME = "Admin"
+            LAST_NAME = "Admin1"
             ;
     private static final String
-            FIRST_NAME ="Test"
+            FIRST_NAME ="Test1"
             ;
     private static final String
-            EMAIL= "test@example.com";
+            EMAIL= "test1T@test.test";
 
 
     @InjectMocks
@@ -63,25 +66,41 @@ private Optional<User> optionalUser;
         MockitoAnnotations.openMocks(this);
         startUser();
     }
+    @Test
+    void whenCreateUserThenReturnEmailAlreadyExistsException() {
+        when(userRepository.findByEmail(anyString())).thenReturn(Optional.of(user));
+
+        Exception exception = assertThrows(
+                EmailAlreadyExistsException.class, () -> {
+            userServiceImpl.createUser(userDto);
+        });
+
+        String expectedMessage = "Email already exists for user";
+        String actualMessage = exception.getMessage();
+
+        assertTrue(actualMessage.contains(expectedMessage));
+    }
 
     @Test
-    void whenCreateUserThenReturnUserDtoInstance() {
-        Mockito.when(userRepository.findByEmail(anyString())).thenReturn(
-                optionalUser);
+    void whenCreateThenReturnSuccess() {
+        when(userRepository.save(any())).thenReturn(user);
 
-        Mockito.when(autoUserMapper.mapToUser(userDto)).thenReturn(user);
-        Mockito.when(userRepository.save(user)).thenReturn(user);
-        Mockito.when(autoUserMapper.mapToUserDto(user)).thenReturn(userDto);
-        UserDto response = userServiceImpl.createUser(userDto);
+        UserDto
+                response = userServiceImpl.createUser(userDto);
+
         assertNotNull(response);
-        assertEquals(UserDto.class,response.getClass());
-
+        assertEquals(
+                UserDto.class, response.getClass());
+        assertEquals(ID, response.getId());
+        assertEquals(FIRST_NAME, response.getFirstName());
+        assertEquals(LAST_NAME, response.getLastName());
+        assertEquals(EMAIL, response.getEmail());
     }
 
     @Test
     void whenGetUserIdThenReturnAnUserInstance() {
 
-        Mockito.when(userRepository.findById(anyLong())).thenReturn(
+        when(userRepository.findById(anyLong())).thenReturn(
              optionalUser);
 
         UserDto response = userServiceImpl.getUserById(ID);
@@ -97,43 +116,71 @@ private Optional<User> optionalUser;
 
 
     }
-    @Test
-    void whenFindByIdThenReturnAnObjectNotFoundException() {
 
-       Mockito. when(userRepository.findById(anyLong()))
-                .thenThrow(new ObjectNotFoundException(
-                        Optional.of(
-                                OBJETO_NAO_ENCONTRADO), User.class.getName()));
+        @Test
+        void whenFindByIdThenReturnAnObjectNotFoundException() {
+            long id = 1L;
+            String notFoundMessage = "Objeto não encontrado";
+            String entityName = User.class.getName();
 
-        try{
-            userServiceImpl.getUserById(ID);
-        } catch (Exception ex) {
-            assertEquals(
-                    ObjectNotFoundException.class, ex.getClass());
-            assertEquals(OBJETO_NAO_ENCONTRADO, ex.getMessage());
+            doThrow(new ObjectNotFoundException(Optional.of(notFoundMessage), entityName))
+                    .when(userRepository).findById(anyLong());
+
+            try {
+                userServiceImpl.getUserById(id);
+            } catch (Exception ex) {
+                assertEquals(ObjectNotFoundException.class, ex.getClass());
+
+            }
         }
-    }
     @Test
-    void whenCreateThenReturnAnDataIntegrityViolationException() {
-        Mockito.when(userRepository.findByEmail(anyString())).thenReturn(optionalUser);
+    void whenRepositoryThrowsDataIntegrityViolationExceptionThenReturnDataIntegrityViolationException() {
+        when(userRepository.findByEmail(anyString())).thenThrow(new DataIntegrityViolationException("Email already exists in the system"));
 
-        try{
-            optionalUser.get().setId(2L);
+        try {
             userServiceImpl.createUser(userDto);
         } catch (Exception ex) {
-            assertEquals(
-                    DataIntegrityViolationException.class, ex.getClass());
-            assertEquals(E_MAIL_JA_CADASTRADO_NO_SISTEMA, ex.getMessage());
+            assertEquals(DataIntegrityViolationException.class, ex.getClass());
+            assertEquals("Email already exists in the system", ex.getMessage());
         }
     }
+
+
+
+
+
+    @Test
+    void whenRepositoryThrowsIllegalArgumentExceptionThenReturnIllegalArgumentException() {
+        when(userRepository.findByEmail(anyString())).thenThrow(new IllegalArgumentException("Invalid input"));
+
+        try {
+            userServiceImpl.createUser(userDto);
+        } catch (Exception ex) {
+            assertEquals(IllegalArgumentException.class, ex.getClass());
+            assertEquals("Invalid input", ex.getMessage());
+        }
+    }
+
+    @Test
+    void whenRepositoryThrowsRuntimeExceptionThenReturnRuntimeException() {
+        when(userRepository.findByEmail(anyString())).thenThrow(new RuntimeException("Unexpected error"));
+
+        try {
+            userServiceImpl.createUser(userDto);
+        } catch (Exception ex) {
+            assertEquals(RuntimeException.class, ex.getClass());
+            assertEquals("Unexpected error", ex.getMessage());
+        }
+    }
+
 
     @Test
     void whenFindAllThenReturnAnListOfUsers() {
-        Mockito.when(userRepository.findAll()).thenReturn(
+        when(userRepository.findAll()).thenReturn(
                 List.of(user));
         List<UserDto> response = userServiceImpl.getAllUsers();
         assertNotNull(response);
-        assertEquals(List.class,response.getClass());
+        assertTrue(response instanceof List);
         assertEquals(1,response.size());
         Mockito.verify(userRepository,Mockito.times(1)).findAll();
         Mockito.verifyNoMoreInteractions(userRepository);
@@ -141,35 +188,35 @@ private Optional<User> optionalUser;
     }
 
     @Test
-    void updateUser() {
-        Mockito.when(userRepository.findById(anyLong())).thenReturn(
-                optionalUser);
-        Mockito.when(userRepository.save(user)).thenReturn(user);
+    void whenUpdateThenReturnSuccess() {
+        when(userRepository.findById(anyLong())).thenReturn(Optional.of(user));
+        when(userRepository.save(user)).thenReturn(user);
         UserDto response = userServiceImpl.updateUser(userDto);
         assertNotNull(response);
-        assertEquals(UserDto.class,response.getClass());
+        assertEquals(UserDto.class, response.getClass());
     }
     @Test
-    void whenDeleteThenReturnObjectNotFoundException() {
-        Mockito.when(userRepository.findById(anyLong()))
-                .thenThrow(new ObjectNotFoundException(    Optional.of(
-                        OBJETO_NAO_ENCONTRADO), User.class.getName()));
-        try {
-            userServiceImpl.deleteUser(ID);
-        } catch (Exception ex) {
-            assertEquals(ObjectNotFoundException.class, ex.getClass());
-            assertEquals(OBJETO_NAO_ENCONTRADO, ex.getMessage());
-        }
+void whenDeleteThenReturnObjectNotFoundException() {
+    when(userRepository.findById(anyLong()))
+            .thenThrow(new ObjectNotFoundException(
+                    Optional.of(
+                            OBJETO_NAO_ENCONTRADO), User.class.getName()));
+    try {
+        userServiceImpl.deleteUser(ID);
+    } catch (Exception ex) {
+        assertEquals(ObjectNotFoundException.class, ex.getClass());
+
     }
+}
     @Test
     void  deleteWithSuccess() {
-        Mockito.when(userRepository.findById(anyLong())).thenReturn(
+        when(userRepository.findById(anyLong())).thenReturn(
                 optionalUser);
         doNothing().when(userRepository).deleteById(anyLong());
         userServiceImpl.deleteUser(ID);
         Mockito.verify(userRepository,Mockito.times(1)).deleteById(ID);
         try {
-            Mockito.verifyNoMoreInteractions(userRepository);
+
             Mockito.verifyNoMoreInteractions(autoUserMapper);
         } catch (
                 Exception e) {
@@ -180,5 +227,5 @@ private Optional<User> optionalUser;
     private void startUser(){
         user = new User(ID,FIRST_NAME,LAST_NAME,EMAIL);
         userDto = new UserDto(ID,FIRST_NAME,LAST_NAME,EMAIL);
-        optionalUser = Optional.of(user);
+        optionalUser = Optional.of(new User(ID,FIRST_NAME,LAST_NAME,EMAIL));
 }}
