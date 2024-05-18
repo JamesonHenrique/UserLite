@@ -16,6 +16,7 @@ import usermanagement.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import usermanagement.service.impl.UserServiceImpl;
 
 import java.net.URI;
 import java.time.LocalDateTime;
@@ -33,7 +34,8 @@ import java.util.stream.Collectors;
 public class UserController {
     private static final String ID = "/{id}";
 
-    private UserService userService;
+    private UserServiceImpl
+            userService;
 private ModelMapper mapper;
     @PostMapping
     @Operation(

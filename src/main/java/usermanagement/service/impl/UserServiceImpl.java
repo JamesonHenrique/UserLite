@@ -18,14 +18,16 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-@AllArgsConstructor
+
 public class UserServiceImpl implements UserService {
-    @Autowired
 
     private UserRepository userRepository;
-    @Autowired
 
     private ModelMapper modelMapper;
+    public UserServiceImpl(UserRepository userRepository,ModelMapper modelMapper) {
+        this.userRepository = userRepository;
+        this.modelMapper = modelMapper;
+    }
     @Override
     public User getUserById(Long id) {
         return userRepository.findById(id)

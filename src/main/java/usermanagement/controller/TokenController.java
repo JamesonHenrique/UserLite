@@ -27,9 +27,7 @@ public class TokenController {
     private  UserRepository
             userRepository;
     private BCryptPasswordEncoder passwordEncoder;
-public TokenController() {
 
-    }
     public TokenController(JwtEncoder jwtEncoder,
                            UserRepository userRepository,
                            BCryptPasswordEncoder passwordEncoder) {
