@@ -1,1 +1,1 @@
-web: java -Dserver.port=$PORT  $JAVA_OPTS -jar target/springboot*.jar
+web: java -Dserver.port=$PORT  $JAVA_OPTS -jar target/user*.jar
