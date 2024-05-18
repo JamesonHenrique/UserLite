@@ -13,6 +13,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.NonTransientDataAccessException;
+import org.springframework.data.crossstore.ChangeSetPersister;
 import usermanagement.dto.UserDto;
 import usermanagement.entity.User;
 import usermanagement.exception.EmailAlreadyExistsException;
@@ -21,6 +22,7 @@ import usermanagement.mapper.AutoUserMapperImpl;
 import usermanagement.repository.UserRepository;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import static com.fasterxml.jackson.databind.jsonFormatVisitors.JsonValueFormat.EMAIL;
@@ -96,7 +98,52 @@ private Optional<User> optionalUser;
         assertEquals(LAST_NAME, response.getLastName());
         assertEquals(EMAIL, response.getEmail());
     }
+    @Test
+void whenUpdateThenReturnSuccess_UserFoundAndUpdated() {
+    when(userRepository.findById(anyLong())).thenReturn(Optional.of(user));
+    when(userRepository.save(user)).thenReturn(user);
+    UserDto response = userServiceImpl.updateUser(userDto);
+    assertNotNull(response);
+    assertEquals(UserDto.class, response.getClass());
+    assertEquals(ID, response.getId());
+    assertEquals(FIRST_NAME, response.getFirstName());
+    assertEquals(LAST_NAME, response.getLastName());
+    assertEquals(EMAIL, response.getEmail());
+}
 
+    @Test
+void whenUpdateThenReturnInternalServerError_UpdateFailed() {
+    when(userRepository.findById(anyLong())).thenReturn(Optional.of(user));
+    when(userRepository.save(user)).thenThrow(new RuntimeException("Internal server error"));
+    try {
+        userServiceImpl.updateUser(userDto);
+    } catch (Exception ex) {
+        assertEquals(RuntimeException.class, ex.getClass());
+        assertEquals("Internal server error", ex.getMessage());
+    }
+}
+    @Test
+void whenUpdateThenReturnDataIntegrityViolationException_UpdateThrowsDataIntegrityViolationException() {
+    when(userRepository.findById(anyLong())).thenReturn(Optional.of(user));
+    when(userRepository.save(user)).thenThrow(new DataIntegrityViolationException("Email already exists in the system"));
+    try {
+        userServiceImpl.updateUser(userDto);
+    } catch (Exception ex) {
+        assertEquals(DataIntegrityViolationException.class, ex.getClass());
+        assertEquals("Email already exists in the system", ex.getMessage());
+    }
+}
+@Test
+void whenUpdateThenReturnUnexpectedError_UpdateThrowsUnexpectedException() {
+    when(userRepository.findById(anyLong())).thenReturn(Optional.of(user));
+    when(userRepository.save(user)).thenThrow(new RuntimeException("Unexpected error"));
+    try {
+        userServiceImpl.updateUser(userDto);
+    } catch (Exception ex) {
+        assertEquals(RuntimeException.class, ex.getClass());
+        assertEquals("Unexpected error", ex.getMessage());
+    }
+}
     @Test
     void whenGetUserIdThenReturnAnUserInstance() {
 
