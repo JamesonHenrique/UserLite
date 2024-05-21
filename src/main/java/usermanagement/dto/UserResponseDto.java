@@ -7,14 +7,15 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
 @Schema(
-        description = "UserDto Model Information"
+        description = "UserResponseDto Model Information"
 )
 @Setter
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserDto {
+public class UserResponseDto {
     @Schema(
             description = "User id"
     )
@@ -35,10 +36,5 @@ public class UserDto {
     )
     @Email
     private String email;
-    @NotEmpty
-    @Schema(
-            description = "User password"
-    )
-    private String password;
 
 }

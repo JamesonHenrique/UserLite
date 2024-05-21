@@ -1,6 +1,7 @@
 package usermanagement.service;
 
 import usermanagement.dto.UserDto;
+import usermanagement.email.PasswordResetToken;
 import usermanagement.entity.User;
 
 import java.util.List;
@@ -15,4 +16,5 @@ public interface UserService {
     User updateUser(UserDto user);
 
     void deleteUser(Long userId);
+
 }

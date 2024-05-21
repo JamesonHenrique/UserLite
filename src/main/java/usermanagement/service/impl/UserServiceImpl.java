@@ -1,21 +1,22 @@
 package usermanagement.service.impl;
 
-import lombok.AllArgsConstructor;
 import org.hibernate.ObjectNotFoundException;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import usermanagement.dto.UserDto;
+import usermanagement.email.PasswordResetToken;
+import usermanagement.entity.Role;
 import usermanagement.entity.User;
 import usermanagement.exception.EmailAlreadyExistsException;
-import usermanagement.exception.ResourceNotFoundException;
-import usermanagement.mapper.AutoUserMapper;
+import usermanagement.repository.RoleRepository;
 import usermanagement.repository.UserRepository;
 import usermanagement.service.UserService;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 
@@ -24,9 +25,14 @@ public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
 
     private ModelMapper modelMapper;
-    public UserServiceImpl(UserRepository userRepository,ModelMapper modelMapper) {
+    private BCryptPasswordEncoder passwordEncoder;
+    private RoleRepository
+            roleRepository;
+    public UserServiceImpl(UserRepository userRepository,ModelMapper modelMapper,BCryptPasswordEncoder passwordEncoder,RoleRepository roleRepository) {
         this.userRepository = userRepository;
         this.modelMapper = modelMapper;
+        this.passwordEncoder = passwordEncoder;
+        this.roleRepository = roleRepository;
     }
     @Override
     public User getUserById(Long id) {
@@ -44,6 +50,18 @@ public class UserServiceImpl implements UserService {
     @Override
     public User createUser(UserDto userDto) {
         User user = modelMapper.map(userDto, User.class);
+        if (userRepository.findByEmail(user.getEmail()).isPresent()) {
+            throw new EmailAlreadyExistsException("Email já cadastrado");
+        }
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        Role
+                basicRole = roleRepository.findByName("basic");
+        if (basicRole != null) {
+
+            user.setRoles(new HashSet<>(
+                    Arrays.asList(basicRole)));
+        }
+
         return userRepository.save(user);
     }
 
@@ -61,5 +79,12 @@ public class UserServiceImpl implements UserService {
                                 "Objeto não encontrado"), User.class.getName()));
         userRepository.deleteById(id);
     }
+
+    public Optional<User> findByEmail(
+            String email) {
+        return userRepository.findByEmail(email);
+
+    }
+
 
 }
