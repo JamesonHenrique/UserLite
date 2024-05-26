@@ -1,6 +1,7 @@
 package usermanagement.service;
 
 import usermanagement.dto.UserDto;
+import usermanagement.dto.UserResponseDto;
 import usermanagement.email.PasswordResetToken;
 import usermanagement.entity.User;
 
@@ -13,7 +14,10 @@ public interface UserService {
 
     List<User> getAllUsers();
 
-    User updateUser(UserDto user);
+    User updateUser(
+            UserDto user);
+    User updateUserPassword(
+            UserDto user);
 
     void deleteUser(Long userId);
 

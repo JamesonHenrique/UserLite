@@ -1,0 +1,28 @@
+
+
+form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  margin-bottom: 34px;
+  align-items: center;
+}
+form input {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  margin-bottom: 34px;
+  align-items: center;
+}
+
+div .input-wrapper{
+  width: 100%;
+}
+form span {
+  font-size: 14px;
+  text-decoration: underline;
+  color: #1E2772;
+  text-align: end;
+}

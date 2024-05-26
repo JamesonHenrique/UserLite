@@ -1,0 +1,28 @@
+<main>
+    <section class="form-section">
+        <img src="../assets/img/logo.svg"/>
+       <h2>{{ title }}</h2>
+       <ng-content></ng-content>
+       <div class="btn-wrapper">
+            <button
+                class="btn-primary"
+                (click)="submit()"
+                (navigate)="navigate()"
+                [disabled]="disablePrimaryBtn"
+            >
+                {{ primaryBtnText }}
+            </button>
+            <div class="divider">
+                <div></div>
+                <span>or</span>
+                <div></div>
+            </div>
+
+            <button class="btn-secondary" (click)="navigate()">{{ secondaryBtnText }}</button>
+       </div>
+    </section>
+    <section class="main-section">
+      <h1>Experience Simplicity with UserLite!</h1>
+        <img src="../assets/img/Group.svg" alt=""/>
+    </section>
+</main>

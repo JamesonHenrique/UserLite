@@ -1,0 +1,50 @@
+
+.user-list__title {
+  font-size: 24px;
+  color: #0175FD;
+  margin-bottom: 20px;
+}
+
+.user-list__table {
+  width: 100%;
+  border-collapse: collapse;
+
+}
+
+.user-list__table mat-header-cell,
+.user-list__table mat-cell {
+  padding: 2px;
+  text-align: left;
+  border-bottom: 1px solid #dddddd;
+
+}
+
+.user-list__table mat-header-cell {
+  background-color: #0060ce;
+  color: #ffffff;
+}
+
+.user-list__table button {
+  margin-top: 10px;
+}
+.header__logo img {
+  max-width: 1000px;
+
+}
+
+.header__links {
+  display: flex;
+  gap: 20px;
+}
+
+.header__links a {
+  color: #000000;
+  text-decoration: none;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+.header__toolbar{
+  background-color: white;
+}

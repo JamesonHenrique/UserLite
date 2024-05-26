@@ -1,0 +1,26 @@
+version: '3'
+services:
+  db:
+    image: mysql
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=ROOT
+
+      - MYSQL_DATABASE=user_management
+      - MYSQL_PASSWORD=root
+    networks:
+      - app-network
+
+  user_management:
+    image: jamesonhenrique/user-management
+    ports:
+      - "8080:8080"
+    depends_on:
+      - user_management_db
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge

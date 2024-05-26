@@ -1,6 +1,7 @@
 package usermanagement.config;
 
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -24,7 +25,7 @@ public class AdminUserConfig implements CommandLineRunner {
     public AdminUserConfig(
             RoleRepository roleRepository,
             UserRepository userRepository,
-            BCryptPasswordEncoder passwordEncoder) {
+          BCryptPasswordEncoder passwordEncoder) {
         this.roleRepository = roleRepository;
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
@@ -57,7 +58,7 @@ public class AdminUserConfig implements CommandLineRunner {
                     user.setFirstName("admin");
                     user.setLastName("admin");
                     user.setEmail("admin@admin");
-                    user.setPassword(passwordEncoder.encode("123"));
+                    user.setPassword(passwordEncoder.encode("123456"));
                     user.setRoles(Set.of(
                             finalRoleAdmin));
                     userRepository.save(user);

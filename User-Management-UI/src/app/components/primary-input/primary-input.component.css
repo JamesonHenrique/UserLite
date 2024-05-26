@@ -1,0 +1,29 @@
+:root {
+  --primary-color: #7001FD;
+  --text-color: #555555;
+  --secondary-color: #1E2772;
+  --gray-bg: #EEEEEE;
+  --gray-secondary-bg: #F1F3F6;
+}
+
+.input-wrapper {
+  color: #555555;
+  font-size: 16px;
+  text-align: start;
+}
+
+.input-wrapper label {
+  margin-bottom: 10px;
+}
+
+.input-wrapper .input-content {
+  width: 100%;
+  border-radius: 8px;
+  display: flex;
+}
+
+.input-wrapper .input-content .icon {
+  padding: 12px;
+  background-color: #0175FD;
+  border-radius: 0 8px 8px 0;
+}

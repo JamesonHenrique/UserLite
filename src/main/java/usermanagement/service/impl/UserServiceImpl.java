@@ -4,6 +4,7 @@ import org.hibernate.ObjectNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import usermanagement.dto.UserDto;
+import usermanagement.dto.UserResponseDto;
 import usermanagement.email.PasswordResetToken;
 import usermanagement.entity.Role;
 import usermanagement.entity.User;
@@ -13,10 +14,7 @@ import usermanagement.repository.UserRepository;
 import usermanagement.service.UserService;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 
@@ -66,17 +64,32 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User updateUser(UserDto userDto) {
+    public User updateUser(
+            UserDto userDto) {
+        User existingUser = modelMapper.map(userDto, User.class);
+        existingUser.setFirstName(userDto.getFirstName());
+        existingUser.setLastName(userDto.getLastName());
+        existingUser.setEmail(userDto.getEmail());
+        existingUser.setPassword(existingUser.getPassword());
+
+return userRepository.save(existingUser);
+    }
+    @Override
+    public User updateUserPassword(UserDto userDto) {
         User user = modelMapper.map(userDto, User.class);
         return userRepository.save(user);
     }
-
     @Override
     public void deleteUser(Long id) {
-        userRepository.findById(id)
+       User user = userRepository.findById(id)
                 .orElseThrow(() -> new ObjectNotFoundException(
                         Optional.of(
                                 "Objeto não encontrado"), User.class.getName()));
+
+        Set<Role>
+                roles = user.getRoles();
+roles.clear();
+
         userRepository.deleteById(id);
     }
 

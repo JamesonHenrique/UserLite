@@ -1,0 +1,18 @@
+
+
+form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  margin-bottom: 32px;
+  align-items: center;
+}
+
+form span {
+  font-size: 14px;
+  text-decoration: underline;
+  color:#1E2772;
+  text-align: end;
+
+}

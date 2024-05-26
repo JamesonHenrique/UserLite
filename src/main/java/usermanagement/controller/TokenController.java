@@ -1,4 +1,5 @@
 package usermanagement.controller;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -35,6 +36,10 @@ public class TokenController {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
     }
+    @Operation(
+            summary = "Login REST API",
+            description = "Login REST API is used to authenticate user and generate JWT token"
+    )
 
     @PostMapping("/login")
     public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest loginRequest) {

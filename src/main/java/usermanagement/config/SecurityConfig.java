@@ -31,6 +31,7 @@ import static org.springframework.security.oauth2.jwt.NimbusJwtEncoder.*;
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
+
 public class SecurityConfig {
 
     @Value("${jwt.public.key}")
