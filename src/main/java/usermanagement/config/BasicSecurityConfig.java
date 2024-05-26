@@ -13,6 +13,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -41,10 +42,12 @@ public class BasicSecurityConfig {
     private RSAPublicKey publicKey;
     @Value("${jwt.private.key}")
     private RSAPrivateKey privateKey;
+
     @Primary
 
     @Bean
     public SecurityFilterChain securityBasicFilterChain(HttpSecurity http) throws Exception {
+
         http
                 .authorizeHttpRequests(authorize -> authorize.requestMatchers(HttpMethod.POST, "/login").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/users").permitAll()
@@ -54,6 +57,7 @@ public class BasicSecurityConfig {
                         .requestMatchers(HttpMethod.PATCH, "/api/users/{id}").permitAll()
                         .requestMatchers(HttpMethod.DELETE, "/api/users/{id}").permitAll()
                         .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
+                        .requestMatchers("/**").permitAll()
                         .anyRequest().authenticated())
                 .csrf(AbstractHttpConfigurer::disable)
                 .oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults()))
@@ -65,6 +69,8 @@ public class BasicSecurityConfig {
 
         return http.build();
     }
+
+
     @Primary
     @Bean
     public JwtDecoder jwtBasicDecoder() {
