@@ -47,13 +47,11 @@ export class ForgotPasswordComponent {
   }
   submit(){
     const email: string = this.emailForm.value.email;
-
+this.router.navigate(["change-password"]);
     this.userService.forgotPassword(email).subscribe(
       next => {
+        this.toastService.success("Token para mudar senha enviado  com sucesso!");
 
-       this.router.navigate(['/change-password']).then(() => {
-          window.location.reload();
-        });
       },
       error => {
         this.toastService.error("Erro inesperado! Tente novamente mais tarde");
